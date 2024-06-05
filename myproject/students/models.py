@@ -2,7 +2,7 @@ from django.db import models
 
 class Student(models.Model):
     name = models.CharField(max_length=100)  # 학생 이름
-    studentNo = models.CharField(max_length=20, unique=True)  # 학번
+    studentNo = models.IntegerField(unique=True)  # 학번을 IntegerField로 변경
 
     def __str__(self):
         return f"{self.name} ({self.studentNo})"

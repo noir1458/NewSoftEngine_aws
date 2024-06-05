@@ -13,15 +13,15 @@ document.addEventListener("DOMContentLoaded", () => {
   createStudentForm.addEventListener("submit", async (event) => {
     event.preventDefault();
     const name = document.getElementById("name").value;
-    const studentNo = document.getElementById("studentNo").value;
+    const studentNo = parseInt(document.getElementById("studentNo").value); // 학번을 정수로 변환
 
     try {
       const response = await fetch("http://127.0.0.1:8000/api/students/", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify({ name, studentNo })
+        body: JSON.stringify({ name, studentNo }),
       });
       const result = await response.json();
       console.log("Student created:", result);
@@ -87,13 +87,13 @@ document.addEventListener("DOMContentLoaded", () => {
           const response = await fetch(`http://127.0.0.1:8000/api/attendances/${attendance.id}/`, {
             method: "PUT",
             headers: {
-              "Content-Type": "application/json"
+              "Content-Type": "application/json",
             },
-            body: JSON.stringify({ attendance_status: attendance.attendance_status })
+            body: JSON.stringify({ attendance_status: attendance.attendance_status }),
           });
 
           if (!response.ok) {
-            throw new Error('Failed to update attendance');
+            throw new Error("Failed to update attendance");
           }
         } catch (error) {
           console.error("Error updating attendance:", error);
@@ -109,10 +109,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // 학생 DELETE
   deleteStudentButton.addEventListener("click", async () => {
-    const studentNo = document.getElementById("delete-student-id").value;
+    const studentNo = parseInt(document.getElementById("delete-student-id").value); // 학번을 정수로 변환
     try {
       const response = await fetch(`http://127.0.0.1:8000/api/students/${studentNo}/`, {
-        method: "DELETE"
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
       });
       if (response.status === 204) {
         console.log(`Student with No ${studentNo} deleted.`);

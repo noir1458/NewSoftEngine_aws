@@ -18,23 +18,22 @@ def student_list(request):
         serializer = StudentSerializer(data=data)
         if serializer.is_valid():
             student = serializer.save()
-            # 학생이 생성된 후, 1주차부터 16주차까지의 출결 상태를 생성합니다.
             for week in range(1, 17):
                 Attendance.objects.create(
                     studentNo=student,
                     week=week,
-                    attendance_status=0  # 기본 출석 상태 설정 (출석)
+                    attendance_status=0
                 )
             return JsonResponse(serializer.data, status=status.HTTP_201_CREATED)
         return JsonResponse(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET', 'PUT', 'DELETE'])
-def student_detail(request, pk=None, studentNo=None):
-    if pk:
-        student = get_object_or_404(Student, pk=pk)
-    else:
-        student = get_object_or_404(Student, studentNo=studentNo)
-
+def student_detail(request, studentNo):
+    try:
+        student = Student.objects.get(studentNo=studentNo)
+    except Student.DoesNotExist:
+        return JsonResponse({'error': 'Student not found'}, status=status.HTTP_404_NOT_FOUND)
+    
     if request.method == 'GET':
         serializer = StudentSerializer(student)
         return JsonResponse(serializer.data)
