@@ -3,6 +3,7 @@ import os
 
 ALLOWED_HOSTS = ['3.38.60.106']
 
+STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 DATABASES = {
