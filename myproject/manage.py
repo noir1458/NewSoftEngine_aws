@@ -5,7 +5,7 @@ import sys
 import dotenv
 
 # Load environment variables from .env file
-dotenv.read_dotenv(os.path.join(os.path.dirname(__file__), '../venvs/mysite.env'))
+dotenv.load_dotenv(os.path.join(os.path.dirname(__file__), '../venvs/mysite.env'))
 
 def main():
     """Run administrative tasks."""
@@ -19,7 +19,6 @@ def main():
             "forget to activate a virtual environment?"
         ) from exc
     execute_from_command_line(sys.argv)
-
 
 if __name__ == '__main__':
     main()
