@@ -1,6 +1,8 @@
 from .base import *
 import os
 
+DEBUG = True  # 일시적으로 True로 변경하여 디버깅
+
 ALLOWED_HOSTS = ['3.38.60.106']
 
 STATIC_URL = '/static/'
